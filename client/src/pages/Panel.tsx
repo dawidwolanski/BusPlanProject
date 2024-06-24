@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Założenie, że używasz React Router
+import { useNavigate } from 'react-router-dom'; 
 import { User } from '../../../Interfaces/User';
 
 const Panel = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState<User | null>(null); // Typ danych użytkownika
+  const [user, setUser] = useState<User | null>(null); 
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const Panel = () => {
           setUser(data.user);
         } else {
           setLoggedIn(false);
-          navigate('/'); // Przekierowanie do strony logowania
+          navigate('/');
         }
       } catch (error) {
         console.error('Error checking login status:', error);
@@ -37,7 +37,7 @@ const Panel = () => {
   }, [navigate]);
 
   if (!loggedIn) {
-    return <div>Loading...</div>; // Można wyświetlić np. spinner
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -59,7 +59,7 @@ const Panel = () => {
       if (!response.ok) {
         throw new Error('Logout failed');
       }
-      navigate('/'); // Przekierowanie po wylogowaniu
+      navigate('/'); 
     } catch (error) {
       console.error('Logout error:', error);
     }
