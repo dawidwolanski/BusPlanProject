@@ -1,4 +1,4 @@
-import { User } from '../../../Interfaces/User'
+import { User } from 'shared/Interfaces/User'
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 

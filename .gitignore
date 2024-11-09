@@ -1,0 +1,66 @@
+# Ignorowanie plików systemowych
+.DS_Store
+Thumbs.db
+
+# Ignorowanie plików kompilacji i katalogów build
+**/build/
+**/dist/
+**/out/
+*.class
+*.exe
+*.dll
+*.so
+
+# Ignorowanie plików tymczasowych IDE
+**/.vscode/
+**/.idea/
+**/*.iml
+
+# Ignorowanie logów i plików tymczasowych
+**/*.log
+**/*.tmp
+**/*.swp
+**/*.bak
+
+# Ignorowanie plików z danymi wrażliwymi lub konfiguracyjnymi
+.env
+.env.local
+**/*.secret
+
+# Ignorowanie zależności menedżera pakietów
+**/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignorowanie artefaktów Pythona
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+
+# Ignorowanie plików generowanych przez kompilatory Java
+**/*.jar
+**/*.war
+**/*.ear
+
+# Ignorowanie plików tymczasowych systemu macOS
+.AppleDouble
+.LSOverride
+Icon?
+
+# Ignorowanie innych popularnych plików
+**/*.sqlite3
+**/*.pid
+**/*.coverage
+coverage/
+
+# Ignorowanie plików wynikowych dla aplikacji C/C++
+**/*.o
+**/*.out
+**/*.d
+
+# Ignorowanie plików tymczasowych edytorów
+**/*.sublime-workspace
+**/*.sublime-project
+*~

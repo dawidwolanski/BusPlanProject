@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Departure } from '../../../Interfaces/Departure';
+import { Departure } from 'shared/Interfaces/Departure';
 
 type DeparturesTableProps = {
   connectionId: number;

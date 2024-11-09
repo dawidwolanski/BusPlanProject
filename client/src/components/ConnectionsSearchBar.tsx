@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BusConnection } from '../../../Interfaces/BusConnection';
+import { BusConnection } from 'shared/Interfaces/BusConnection';
 
 type SearchFormInputs = {
   searchTerm: string;

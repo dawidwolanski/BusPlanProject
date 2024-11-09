@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { User } from '../../../Interfaces/User';
+import { User } from 'shared/Interfaces/User';
 
 const Panel = () => {
   const [loggedIn, setLoggedIn] = useState(false);
