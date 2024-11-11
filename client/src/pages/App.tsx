@@ -1,19 +1,18 @@
-import React from 'react';
-import '../styles/App.css';
-import LoginForm from '../components/LoginForm';
-import DeparturesTable from '../components/DeparturesTable';
-import ConnectionsSearchBar from '../components/ConnectionsSearchBar';
+import DeparturesTable from '../containers/DeparturesTable'
+import Button from '../components/Button'
+import '../styles/main.scss'
+import MenuLink from '../components/MenuLink'
 
 function App() {
-  return (
-    <div className="App">
-      <LoginForm />
-      <ConnectionsSearchBar />
-      <DeparturesTable connectionId={1} />
 
-      
-    </div>
-  );
+  return (
+    <>
+    
+      <Button label='clickme'/>
+      <MenuLink label='clickme' href='/'></MenuLink>
+      <DeparturesTable connectionId={1}/>
+    </>
+  )
 }
 
-export default App;
+export default App

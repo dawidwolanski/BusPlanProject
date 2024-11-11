@@ -1,0 +1,19 @@
+@use '../styles/main.scss' as *;
+
+.btn {
+    font-family: $font-family;
+    background-color: none;
+    color: $color-light-gray;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 1px solid $color-dark-gray;
+
+    &:hover {
+      background-color: $color-dark-green;
+      color: $color-font-white;
+    }
+
+  }
+  

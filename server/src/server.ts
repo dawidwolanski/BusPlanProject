@@ -8,11 +8,17 @@ import * as path from 'path';
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT as string, 10) || 3000;
 
-app.use(cors())
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions))
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 app.use(express.json());
 app.use('/api', apirouter);
-app.use('/userapi', userapirouter);
+app.use('/', userapirouter);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));

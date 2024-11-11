@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BusConnection } from 'shared/Interfaces/BusConnection';
+import ENDPOINTS from '../config/endpoints';
 
 type SearchFormInputs = {
   searchTerm: string;
@@ -11,8 +12,6 @@ type OptionsProps = {
 };
 
 const Options: React.FC<OptionsProps> = ({ connections }) => {
-    console.log(connections);
-    
     return (
         <div>
             {
@@ -38,7 +37,7 @@ const ConnectionsSearchBar: React.FC = () => {
 
     const newTimeoutId = setTimeout(async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:3001/api/searchconnections?searchTerm=${encodeURIComponent(value)}`);
+        const response = await fetch(ENDPOINTS.SEARCH_CONNECTIONS(value));
         
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -49,7 +48,7 @@ const ConnectionsSearchBar: React.FC = () => {
       } catch (error) {
         console.error('Search error:', error);
       }
-    }, 300); // 300ms delay
+    }, 300);
 
     setTimeoutId(newTimeoutId);
   };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { User } from 'shared/Interfaces/User';
+import ENDPOINTS from '../config/endpoints';
 
 const Panel = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -11,7 +12,7 @@ const Panel = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch('userapi/status', {
+        const response = await fetch(ENDPOINTS.USER_STATUS, {
             method: 'GET',
             credentials: 'include',
         });
@@ -55,7 +56,7 @@ const Panel = () => {
 
   async function handleLogout() {
     try {
-      const response = await fetch('http://127.0.0.1:3001/userapi/logout', { method: 'POST' });
+      const response = await fetch(ENDPOINTS.USER_LOGOUT, { method: 'POST' });
       if (!response.ok) {
         throw new Error('Logout failed');
       }

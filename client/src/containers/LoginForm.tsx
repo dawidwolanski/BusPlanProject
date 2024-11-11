@@ -1,6 +1,7 @@
 import { User } from 'shared/Interfaces/User'
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import ENDPOINTS from '../config/endpoints';
 
 type FormData = {
   login: string;
@@ -16,7 +17,7 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch('/userapi/status', {
+        const response = await fetch(ENDPOINTS.USER.STATUS, {
           method: 'GET',
           credentials: 'include',
         });
@@ -41,7 +42,7 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch('/userapi/login', {
+      const response = await fetch(ENDPOINTS.USER.LOGIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('/userapi/logout', {
+      const response = await fetch(ENDPOINTS.USER.LOGOUT, {
         method: 'POST',
         credentials: 'include',
       });

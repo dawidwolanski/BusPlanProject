@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Departure } from 'shared/Interfaces/Departure';
+import ENDPOINTS from '../config/endpoints';
 
 type DeparturesTableProps = {
   connectionId: number;
@@ -12,7 +13,7 @@ const DeparturesTable: React.FC<DeparturesTableProps> = ({ connectionId }) => {
   useEffect(() => {
     const fetchDepartures = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:3001/api/departures/${connectionId}`); // mozna pogrupowac po godzinach
+        const response = await fetch(ENDPOINTS.DEPARTURES.GET(connectionId)); // mozna pogrupowac po godzinach
         if (!response.ok) {
           throw new Error('Failed to fetch departures');
         }
@@ -30,7 +31,7 @@ const DeparturesTable: React.FC<DeparturesTableProps> = ({ connectionId }) => {
     return departures
       .filter(departure => departure.days === day)
       .map(departure => (
-        <tr>
+        <tr key={departure.id}>
           <td>{`${departure.departure_hour}:${departure.departure_minutes}`}</td>
         </tr>
       ));

@@ -1,0 +1,23 @@
+@use '../styles/main.scss' as *;
+
+.menu_link {
+    font-family: $font-family;
+    background-color: none;
+    color: $color-font-white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s opacity 0.3s;
+
+    &:hover {
+      background-color: $color-dark-gray;
+      color: $color-font-white;
+      opacity: 0.7;
+    }
+
+    &:any-link {
+        color: $color-font-white;
+        text-decoration: none;
+    }
+  }
+  
