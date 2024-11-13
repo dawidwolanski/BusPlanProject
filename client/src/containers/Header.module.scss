@@ -1,0 +1,48 @@
+.header {
+  max-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  padding: $padding-base $padding-base*2;
+
+  .logo img {
+    max-height: 48px;
+  }
+}
+
+.right-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.menu-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+@media screen and (max-width: $breakpoint-lg) {
+  .header {
+    padding: $padding-base;
+  }
+
+  .right-container {
+    gap: 12px;
+  }
+
+  .menu-list {
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+  .menu-list {
+    display: none;
+  }
+}

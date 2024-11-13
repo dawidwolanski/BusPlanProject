@@ -1,0 +1,30 @@
+.burgerMenuButton {
+  width: 32px;
+  height: 32px;
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
+}
+  
+.burgerMenuIcon {
+  color: white;
+  transition: color 0.3s;
+
+  &:hover {
+     color: $color-dark-green;
+  }
+}
+
+
+@media (max-width: $breakpoint-md) {
+  .burgerMenuButton {
+    display: flex;
+  }
+}

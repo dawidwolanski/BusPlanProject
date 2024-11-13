@@ -1,15 +1,11 @@
 import DeparturesTable from '../containers/DeparturesTable'
-import Button from '../components/Button'
-import '../styles/main.scss'
-import MenuLink from '../components/MenuLink'
+import Header from '../containers/Header'
 
 function App() {
 
   return (
     <>
-    
-      <Button label='clickme'/>
-      <MenuLink label='clickme' href='/'></MenuLink>
+      <Header/>
       <DeparturesTable connectionId={1}/>
     </>
   )

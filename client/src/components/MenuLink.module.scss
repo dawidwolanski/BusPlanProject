@@ -1,10 +1,8 @@
-@use '../styles/main.scss' as *;
-
 .menu_link {
     font-family: $font-family;
     background-color: none;
     color: $color-font-white;
-    padding: 10px 20px;
+    padding: $padding-base $padding-base*2;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s opacity 0.3s;
@@ -21,3 +19,9 @@
     }
   }
   
+
+  @media screen and (max-width: $breakpoint-lg) {
+    .menu_link {
+        padding: $padding-base;
+    }
+  }

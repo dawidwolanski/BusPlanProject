@@ -7,10 +7,11 @@ interface MenuLinkProps {
   className?: string;
 }
 
-const MenuLink: React.FC<MenuLinkProps> = ({ label, className = '' }) => {
+const MenuLink: React.FC<MenuLinkProps> = ({ label, href, className = '' }) => {
   return (
     <a
       className={`${styles.menu_link} ${className}`}
+      href={href}
     >
       {label}
     </a>
