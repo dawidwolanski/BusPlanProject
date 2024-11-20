@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import DatabaseService from '../services/DatabaseService';
 import { BusStop } from 'shared/Interfaces/BusStop';
@@ -8,10 +7,10 @@ export const getBusStops = async (req: Request, res: Response) => {
 
     try {
         const busStops = await DatabaseService.getBusStops(connectionId);
-        res.status(200).json(busStops);
+        res.status(200).json({ ok: 1, busStops });
     } catch (error) {
         console.error('Error fetching bus stops:', error);
-        res.status(500).send('Internal server error');
+        res.status(500).json({ ok: 0, message: 'Internal server error' });
     }
 };
 
@@ -20,10 +19,10 @@ export const insertBusStop = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.insertBusStop(busStopData);
-        res.status(201).send('Bus stop created successfully');
+        res.status(201).json({ ok: 1, message: 'Bus stop created successfully' });
     } catch (error) {
         console.error('Error creating bus stop:', error);
-        res.status(500).send('Could not create bus stop');
+        res.status(500).json({ ok: 0, message: 'Could not create bus stop' });
     }
 };
 
@@ -32,10 +31,10 @@ export const updateBusStop = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.updateBusStop(busStopData);
-        res.status(200).send('Bus stop updated successfully');
+        res.status(200).json({ ok: 1, message: 'Bus stop updated successfully' });
     } catch (error) {
         console.error('Error updating bus stop:', error);
-        res.status(500).send('Could not update bus stop');
+        res.status(500).json({ ok: 0, message: 'Could not update bus stop' });
     }
 };
 
@@ -44,9 +43,9 @@ export const deleteBusStop = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.deleteBusStop(busStopId);
-        res.status(200).send('Bus stop deleted successfully');
+        res.status(200).json({ ok: 1, message: 'Bus stop deleted successfully' });
     } catch (error) {
         console.error('Error deleting bus stop:', error);
-        res.status(500).send('Could not delete bus stop');
+        res.status(500).json({ ok: 0, message: 'Could not delete bus stop' });
     }
 };

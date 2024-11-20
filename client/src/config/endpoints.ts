@@ -1,8 +1,6 @@
 const VITE_APP_BASE_URL = import.meta.env.VITE_APP_BASE_URL
 const API_BASE_URL = `${VITE_APP_BASE_URL}/api`
 
-
-
 const ENDPOINTS = {
     DEPARTURES: {
         GET: (connectionId: number) => `${API_BASE_URL}/departures/${connectionId}`,
@@ -37,6 +35,5 @@ const ENDPOINTS = {
         LOGOUT: `${API_BASE_URL}/user/logout`
     }
 };
-
 
 export default ENDPOINTS;

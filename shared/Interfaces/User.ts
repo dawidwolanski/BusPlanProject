@@ -12,5 +12,5 @@ export interface User {
 }
 
 export interface UserWithPasswordHash extends User {
-    passwordHash: string
+    password_hash: string
 }

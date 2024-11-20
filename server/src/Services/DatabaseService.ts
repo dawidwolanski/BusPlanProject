@@ -308,9 +308,9 @@ class DatabaseService {
             updates.push('email = ?');
             values.push(userData.email);
         }
-        if (userData.passwordHash) {
+        if (userData.password_hash) {
             updates.push('password_hash = ?');
-            values.push(userData.passwordHash);
+            values.push(userData.password_hash);
         }
 
         if (updates.length === 0) {

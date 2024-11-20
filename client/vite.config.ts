@@ -14,5 +14,9 @@ export default defineConfig({
         additionalData: `@use './src/styles/variables' as *;`
       }
     }
-  }
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5137,
+  },
 })

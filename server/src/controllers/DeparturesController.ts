@@ -7,10 +7,10 @@ export const getDepartures = async (req: Request, res: Response) => {
     
     try {
         const departures = await DatabaseService.getDepartures(connectionId);
-        res.status(200).json(departures);
+        res.status(200).json({ ok: 1, departures });
     } catch (error) {
         console.error('Error fetching departures:', error);
-        res.status(500).send('Internal server error');
+        res.status(500).json({ ok: 0, message: 'Internal server error' });
     }
 };
 
@@ -19,10 +19,10 @@ export const insertDeparture = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.insertDeparture(departureData);
-        res.status(201).send('Departure created successfully');
+        res.status(201).json({ ok: 1, message: 'Departure created successfully' });
     } catch (error) {
         console.error('Error creating departure:', error);
-        res.status(500).send('Could not create departure');
+        res.status(500).json({ ok: 0, message: 'Could not create departure' });
     }
 };
 
@@ -31,10 +31,10 @@ export const updateDeparture = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.updateDeparture(departureData);
-        res.status(200).send('Departure updated successfully');
+        res.status(200).json({ ok: 1, message: 'Departure updated successfully' });
     } catch (error) {
         console.error('Error updating departure:', error);
-        res.status(500).send('Could not update departure');
+        res.status(500).json({ ok: 0, message: 'Could not update departure' });
     }
 };
 
@@ -43,9 +43,9 @@ export const deleteDeparture = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.deleteDeparture(departureId);
-        res.status(200).send('Departure deleted successfully');
+        res.status(200).json({ ok: 1, message: 'Departure deleted successfully' });
     } catch (error) {
         console.error('Error deleting departure:', error);
-        res.status(500).send('Could not delete departure');
+        res.status(500).json({ ok: 0, message: 'Could not delete departure' });
     }
 };

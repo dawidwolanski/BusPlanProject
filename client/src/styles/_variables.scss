@@ -1,4 +1,3 @@
-
 $color-dark-green: #61892f; // ciemny zielony
 $color-green: #86c232;      // zielony
 $color-dark: #222629;  // ciemny niebieski
@@ -6,12 +5,17 @@ $color-dark-gray: #474b4f;  // ciemny szary
 $color-light-gray: #6b6e70;  // jasny szary
 $color-font-white: #ffffff; // biały kolor fontu
 $color-smoked-white: #cacaca;
+$color-error: #e74c3c; // error color
 
 $font-family: 'Gotham', sans-serif;
 $font-size-base: 16px;
 
 $padding-base: 10px;
 $margin-base: 20px;
+$border-radius-base: 8px;
+
+$header-height: 72px;
+$footer-height: 56px;
 
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;

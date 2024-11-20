@@ -9,8 +9,8 @@ export const searchConnections = async (req: Request, res: Response) => {
         const selectedTimestamp = travelAfterTimestamp ? Number(travelAfterTimestamp) : Date.now();
 
         if (isNaN(selectedTimestamp)) {
-            res.status(400).json({ message: 'Invalid travel timestamp parameter' });
-            return 
+            res.status(200).json({ ok: 0, message: 'Invalid travel timestamp parameter' });
+            return;
         }
 
         const dayToSearch = new Date(selectedTimestamp).getDay();
@@ -18,9 +18,9 @@ export const searchConnections = async (req: Request, res: Response) => {
         const queryData = { ...searchParams, travelAfterTimestamp: selectedTimestamp };
 
         const options = await DatabaseService.searchConnections(queryData, daysSearchOrder);
-        res.json(options);
+        res.status(200).json({ ok: 1, options });
     } catch (error) {
         console.error('Error in /searchconnections:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ ok: 0, message: 'Internal server error' });
     }
 }

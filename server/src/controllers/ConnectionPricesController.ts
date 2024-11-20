@@ -8,13 +8,13 @@ export const getConnectionPrice = async (req: Request, res: Response) => {
     try {
         const connectionPrice = await DatabaseService.getConnectionPrice(connectionId);
         if (!connectionPrice) {
-            res.status(404).send('Connection price not found');
-            return 
+            res.status(200).json({ ok: 0, message: 'Connection price not found' });
+            return;
         }
-        res.status(200).json(connectionPrice);
+        res.status(200).json({ ok: 1, connectionPrice });
     } catch (error) {
         console.error('Error fetching connection price:', error);
-        res.status(500).send('Internal server error');
+        res.status(500).json({ ok: 0, message: 'Internal server error' });
     }
 };
 
@@ -23,10 +23,10 @@ export const insertConnectionPrice = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.insertConnectionPrice(connectionPriceData);
-        res.status(201).send('Connection price created successfully');
+        res.status(201).json({ ok: 1, message: 'Connection price created successfully' });
     } catch (error) {
         console.error('Error creating connection price:', error);
-        res.status(500).send('Could not create connection price');
+        res.status(500).json({ ok: 0, message: 'Could not create connection price' });
     }
 };
 
@@ -35,10 +35,10 @@ export const updateConnectionPrice = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.updateConnectionPrice(connectionPriceData);
-        res.status(200).send('Connection price updated successfully');
+        res.status(200).json({ ok: 1, message: 'Connection price updated successfully' });
     } catch (error) {
         console.error('Error updating connection price:', error);
-        res.status(500).send('Could not update connection price');
+        res.status(500).json({ ok: 0, message: 'Could not update connection price' });
     }
 };
 
@@ -47,9 +47,9 @@ export const deleteConnectionPrice = async (req: Request, res: Response) => {
 
     try {
         await DatabaseService.deleteConnectionPrice(connectionId);
-        res.status(200).send('Connection price deleted successfully');
+        res.status(200).json({ ok: 1, message: 'Connection price deleted successfully' });
     } catch (error) {
         console.error('Error deleting connection price:', error);
-        res.status(500).send('Could not delete connection price');
+        res.status(500).json({ ok: 0, message: 'Could not delete connection price' });
     }
 };

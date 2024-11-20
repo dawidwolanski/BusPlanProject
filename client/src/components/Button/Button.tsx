@@ -5,11 +5,14 @@ interface ButtonProps {
   label: string;
   onClick?: () => void;
   className?: string;
+  isSubmit?: boolean;
+  isDisabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, className = '' }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, className = '', isSubmit = false }) => {
   return (
     <button 
+      type={isSubmit ? 'submit' : 'button'}
       className={`${styles.btn} ${className}`}
       onClick={onClick}
     >

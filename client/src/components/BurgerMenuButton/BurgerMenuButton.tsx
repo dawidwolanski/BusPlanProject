@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './BurgerMenuButton.module.scss';
-import BurgerMenuIcon from '../assets/icons/burger-menu.svg?react'
+import BurgerMenuIcon from '../../assets/icons/burger-menu.svg?react'
 
 interface BurgerMenuButtonProps {
   onClick: () => void;

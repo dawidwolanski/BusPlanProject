@@ -64,3 +64,8 @@ coverage/
 **/*.sublime-workspace
 **/*.sublime-project
 *~
+
+
+*.crt
+*.key
+*.csr
