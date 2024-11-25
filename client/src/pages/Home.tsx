@@ -1,9 +1,11 @@
 import React from 'react';
+import ConnectionsSearch from '../containers/ConnectionsSearch/ConnectionsSearch';
 
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Welcome to the Home Page!</h1>
+      <ConnectionsSearch />
+
     </div>
   );
 }

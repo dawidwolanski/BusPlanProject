@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
   label: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   className?: string;
   isSubmit?: boolean;
   isDisabled?: boolean;

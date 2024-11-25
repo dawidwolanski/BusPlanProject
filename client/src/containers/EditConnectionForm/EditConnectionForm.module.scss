@@ -1,0 +1,47 @@
+.form-group {
+    margin-bottom: $padding-base * 2;
+    text-align: left;
+}
+
+.form-label {
+    margin-bottom: calc($padding-base / 2);
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: $padding-base;
+    margin-top: calc($padding-base / 2);
+    color: $color-font-white;
+    font-family: $font-family;
+    border: 1px solid #ccc;
+    border-radius: $border-radius-base;
+    background-color: $color-dark;
+    &:focus,
+    &:active {
+        outline: none;
+        border-color: #ccc;
+    }
+}
+
+.error-message {
+    color: $color-error;
+    font-size: 1rem;
+    margin-top: calc($padding-base / 2);
+    margin-bottom: $padding-base * 2;
+}
+
+h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+button {
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.delete-button {
+    background-color: $color-error;
+    margin-top: -60px;
+}

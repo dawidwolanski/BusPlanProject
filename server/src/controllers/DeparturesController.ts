@@ -3,7 +3,7 @@ import DatabaseService from '../services/DatabaseService';
 import { Departure } from 'shared/Interfaces/Departure';
 
 export const getDepartures = async (req: Request, res: Response) => {
-    const connectionId = parseInt(req.params.connectionId);
+    const connectionId = parseInt(req.params.id);
     
     try {
         const departures = await DatabaseService.getDepartures(connectionId);

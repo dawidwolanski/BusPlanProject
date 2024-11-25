@@ -8,7 +8,16 @@ interface MenuLinkProps {
   className?: string;
 }
 const MenuLink: React.FC<MenuLinkProps> = ({ label, href, className = '' }) => {
-  return (
+  const isAnchorLink = href.startsWith('./#');
+
+  return isAnchorLink ? (
+    <a
+      href={href}
+      className={`${styles.menu_link} ${className}`}
+    >
+      {label}
+    </a>
+  ) : (
     <Link
       to={href}
       className={`${styles.menu_link} ${className}`}

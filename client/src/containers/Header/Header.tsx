@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import MenuLink from '../components/MenuLink/MenuLink';
-import BurgerMenuButton from '../components/BurgerMenuButton/BurgerMenuButton';
+import React, { useEffect, useState } from 'react';
+import MenuLink from '../../components/MenuLink/MenuLink';
+import BurgerMenuButton from '../../components/BurgerMenuButton/BurgerMenuButton';
 import styles from './Header.module.scss';
-import LoginButton from '../components/LoginButton/LoginButton';
+import LoginButton from '../../components/LoginButton/LoginButton';
 import { Link } from 'react-router-dom';
 
 
@@ -12,6 +12,17 @@ const Header: React.FC = () => {
     const toggleMenu = (): void => {
       setIsMenuOpen(prevState => !prevState);
     };
+
+    useEffect(() => {
+      if (location.hash) {
+          const element = document.getElementById(location.hash.substring(1));
+          if (element) {
+            setTimeout(() => {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }, 400);
+          }
+      }
+  }, [location]);
   
     return (
       <header className={styles.header}>
@@ -26,9 +37,8 @@ const Header: React.FC = () => {
             <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`}>
                 <ul className={styles['menu-list']}>
                     <li><MenuLink href="/" label="Home" /></li>
-                    <li><MenuLink href="/about" label="About" /></li>
-                    <li><MenuLink href="/services" label="Services" /></li>
-                    <li><MenuLink href="/contact" label="Contact" /></li>
+                    <li><MenuLink href="./#connections" label="Departures" /></li>
+                    <li><MenuLink href="/panel" label="Panel" /></li>
                     {isMenuOpen && (
                       <li>
                         <LoginButton className={'menu-login-button'} />

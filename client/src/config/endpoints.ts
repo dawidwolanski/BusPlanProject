@@ -27,7 +27,7 @@ const ENDPOINTS = {
         UPDATE: (id: number) => `${API_BASE_URL}/bus-stops/${id}`,
         DELETE: (id: number) => `${API_BASE_URL}/bus-stops/${id}`
     },
-    SEARCH_CONNECTIONS: (searchTerm: string) => `${API_BASE_URL}/searchconnections?searchTerm=${encodeURIComponent(searchTerm)}`,
+    SEARCH_CONNECTIONS: (params: string) => `${API_BASE_URL}/searchconnections?${params}`,
     USER: {
         STATUS: `${API_BASE_URL}/user/status`,
         REGISTER: `${API_BASE_URL}/user/register`,

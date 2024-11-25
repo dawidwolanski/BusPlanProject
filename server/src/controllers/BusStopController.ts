@@ -3,7 +3,7 @@ import DatabaseService from '../services/DatabaseService';
 import { BusStop } from 'shared/Interfaces/BusStop';
 
 export const getBusStops = async (req: Request, res: Response) => {
-    const connectionId = parseInt(req.params.connectionId);
+    const connectionId = parseInt(req.params.id);
 
     try {
         const busStops = await DatabaseService.getBusStops(connectionId);

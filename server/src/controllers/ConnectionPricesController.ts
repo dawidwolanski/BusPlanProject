@@ -3,7 +3,7 @@ import DatabaseService from '../services/DatabaseService';
 import { ConnectionPrice } from 'shared/Interfaces/ConnectionPrice'; 
 
 export const getConnectionPrice = async (req: Request, res: Response) => {
-    const connectionId = parseInt(req.params.connectionId);
+    const connectionId = req.params.id;
 
     try {
         const connectionPrice = await DatabaseService.getConnectionPrice(connectionId);
@@ -31,7 +31,7 @@ export const insertConnectionPrice = async (req: Request, res: Response) => {
 };
 
 export const updateConnectionPrice = async (req: Request, res: Response) => {
-    const connectionPriceData = { ...req.body, connection_id: parseInt(req.params.connectionId) };
+    const connectionPriceData = { ...req.body, connection_id: parseInt(req.params.id) };
 
     try {
         await DatabaseService.updateConnectionPrice(connectionPriceData);
@@ -43,7 +43,7 @@ export const updateConnectionPrice = async (req: Request, res: Response) => {
 };
 
 export const deleteConnectionPrice = async (req: Request, res: Response) => {
-    const connectionId = parseInt(req.params.connectionId);
+    const connectionId = parseInt(req.params.id);
 
     try {
         await DatabaseService.deleteConnectionPrice(connectionId);

@@ -6,6 +6,7 @@ import { User, UserWithPasswordHash } from 'shared/Interfaces/User';
 import { BusStop } from 'shared/Interfaces/BusStop';
 import LoginType from 'shared/Enums/LoginType'
 import searchConnectionsParams from 'shared/Types/searchConnectionsParams'
+import { getDaysSearchOrder } from '../utils/utils';
 
 class DatabaseService {
     connection: Connection;
@@ -92,7 +93,7 @@ class DatabaseService {
         }
     }
 
-    async getConnectionPrice(connection_id: number): Promise<ConnectionPrice | null> {
+    async getConnectionPrice(connection_id: string): Promise<ConnectionPrice | null> {
         const sql = 'SELECT connection_id, price_per_full_travel, price_per_stop FROM ticket_prices WHERE connection_id = ?';
         const result = await this.queryPromise(sql, [connection_id]);
     
@@ -151,25 +152,25 @@ class DatabaseService {
     }
 
     async getUserConnections(user_id: number): Promise<BusConnection[]> {
-        const sql = 'SELECT id, connection_name, notes, total_travel_time, departure_place, destination_place FROM bus_connections WHERE owner_id = ?';
+        const sql = 'SELECT id, connection_name, notes, total_travel_time, departure_place, destination_place FROM bus_connections WHERE owner_id = ? AND is_deleted = 0';
         const result = await this.queryPromise(sql, [user_id]);
 
         return result;
     }
 
     async getConnections(): Promise<BusConnection[]> {
-        const sql = 'SELECT id, owner_id, connection_name, notes, total_travel_time, departure_place, destination_place FROM bus_connections';
+        const sql = 'SELECT id, owner_id, connection_name, notes, total_travel_time, departure_place, destination_place FROM bus_connections WHERE is_deleted = 0';
         const result = await this.queryPromise(sql, []);
 
         return result;
     }
 
     async insertConnection(connectionData: BusConnection): Promise<void> {
-        const sql = 'INSERT INTO bus_connections (connection_name, notes, total_travel_time, owner_id, departure_place, destination_place) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO bus_connections (connection_name, notes, total_travel_time, owner_id, departure_place, destination_place) VALUES (?, ?, ?, ?, ?, ?)';
         const values = [connectionData.connection_name, connectionData.notes, connectionData.total_travel_time, connectionData.owner_id, connectionData.departure_place, connectionData.destination_place];
     
         try {
-            await this.queryPromise(sql, values);
+            return await this.queryPromise(sql, values);
         } catch (error) {
             console.error('Error inserting connection:', error);
             throw new Error('Could not insert connection');
@@ -209,7 +210,7 @@ class DatabaseService {
     }
 
     async deleteConnection(connectionId: number) {
-        const sql = 'DELETE FROM bus_connections WHERE id = ?';
+        const sql = 'UPDATE bus_connections SET is_deleted = 1 WHERE id = ?';
         return await this.queryPromise(sql, [connectionId])
     }
 
@@ -278,7 +279,7 @@ class DatabaseService {
 
     async findUser({input, type}: {input: string, type: LoginType}): Promise<UserWithPasswordHash> | null {
         const searchedField = type;
-        const sql = `SELECT id, username, type, password_hash FROM users WHERE ${searchedField} = ?`;
+        const sql = `SELECT id, username, email, type, password_hash FROM users WHERE ${searchedField} = ?`;
         const result = await this.queryPromise(sql, [input]);
 
         return result[0] ?? null;
@@ -339,23 +340,35 @@ class DatabaseService {
         }
     }
 
-    async searchConnections(params: searchConnectionsParams, daysOrder: string[]): Promise<BusConnection[]> {
-        const { connection_id, departure_place, destination_place } = params;
+    async searchConnections(searchParams: searchConnectionsParams): Promise<(BusConnection & Departure & ConnectionPrice)[]> {
         const sqlParams: (string | number)[] = [];
-        const areSearchPlaceParamsEmpty = [connection_id, departure_place, destination_place].every(v => typeof v !== undefined)
+        const { departure_place, destination_place, travelAfterTimestamp } = searchParams;
+        const dayToSearch = new Date(travelAfterTimestamp).getDay();
+        const daysOrder = getDaysSearchOrder(dayToSearch);
 
-        const placeCriteria = connection_id 
-            ? 'bus_connections.id = ?' 
-            : 'bus_connections.departure_place = ? AND bus_connections.destination_place = ?';
-    
-        if (connection_id) {
-            sqlParams.push(connection_id);
-        } else {
-            sqlParams.push(departure_place, destination_place);
+        const requestedDate = new Date(Number(travelAfterTimestamp));
+        const timeToSearchAfter = requestedDate.getHours() * 60 + requestedDate.getMinutes();
+
+        const whereClauses: string[] = [];
+
+        if (departure_place) {
+            whereClauses.push('bus_connections.departure_place = ?');
+            sqlParams.push(departure_place);
         }
 
-        const whereClauseCriteria = areSearchPlaceParamsEmpty ? '1' : placeCriteria
-    
+        if (destination_place) {
+            whereClauses.push('bus_connections.destination_place = ?');
+            sqlParams.push(destination_place);
+        }
+
+        whereClauses.push(
+            `((days = '${daysOrder[0]}' 
+            AND (departures.departure_hour * 60 + departures.departure_minutes) >= ? ) 
+            OR days != '${daysOrder[0]}')`);
+        sqlParams.push(timeToSearchAfter);
+
+        const whereClauseCriteria = whereClauses.length > 0 ? whereClauses.join(' AND ') : '1';
+
         const daysOrderString = daysOrder.map(day => `'${day}'`).join(', ');
         const orderByCriteria = `
             ORDER BY 
@@ -365,17 +378,31 @@ class DatabaseService {
         `;
     
         const sql = `
-            SELECT * 
-            FROM bus_connections
-            INNER JOIN departures ON bus_connections.id = departures.connection_id
-            INNER JOIN ticket_prices ON bus_connections.id = ticket_prices.connection_id
-            WHERE ${whereClauseCriteria}
-            ${orderByCriteria}
-            LIMIT 20;
-        `;
+        SELECT 
+            departures.id,
+            bus_connections.id AS connection_id,
+            bus_connections.connection_name,
+            bus_connections.owner_id,
+            bus_connections.notes,
+            bus_connections.total_travel_time,
+            bus_connections.departure_place,
+            bus_connections.destination_place,
+            departures.departure_hour,
+            departures.departure_minutes,
+            departures.days,
+            ticket_prices.price_per_full_travel,
+            ticket_prices.price_per_stop
+        FROM bus_connections
+        INNER JOIN departures ON bus_connections.id = departures.connection_id
+        INNER JOIN ticket_prices ON bus_connections.id = ticket_prices.connection_id
+        WHERE ${whereClauseCriteria}
+        ${orderByCriteria}
+        LIMIT 20;
+    `;
 
         try {
             const result = await this.queryPromise(sql, sqlParams);
+            
             return result;
         } catch (error) {
             console.error("Error executing searchConnections query:", error);

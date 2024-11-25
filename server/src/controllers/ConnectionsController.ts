@@ -4,7 +4,7 @@ import { BusConnection } from 'shared/Interfaces/BusConnection';
 
 export const getUserConnections = async (req: Request, res: Response) => {
     const userId = parseInt(req.params.userId);
-
+    
     try {
         const connections = await DatabaseService.getUserConnections(userId);
         res.status(200).json({ ok: 1, connections });
@@ -26,10 +26,11 @@ export const getConnections = async (req: Request, res: Response) => {
 
 export const insertConnection = async (req: Request, res: Response) => {
     const connectionData: BusConnection = req.body;
+    connectionData.owner_id = req.session?.user?.id;
 
     try {
-        await DatabaseService.insertConnection(connectionData);
-        res.status(201).json({ ok: 1, message: 'Connection created successfully' });
+        const response = await DatabaseService.insertConnection(connectionData);
+        res.status(201).json({ ok: 1, message: 'Connection created successfully', data: response });
     } catch (error) {
         console.error('Error inserting connection:', error);
         res.status(500).json({ ok: 0, message: 'Could not insert connection' });

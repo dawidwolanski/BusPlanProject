@@ -1,0 +1,25 @@
+.profile {
+    margin-top: 60px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.profile p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.profile .logoutButton {
+    padding: 10px 15px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
