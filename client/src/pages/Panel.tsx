@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { Navigate } from 'react-router-dom';
 import ENDPOINTS from '../config/endpoints';
-import FormTextInput from '../components/FormTextInput/FormTextInput';
 import Button from '../components/Button/Button';
 import styles from './Panel.module.scss';
-import { BusStop } from '../../../shared/Interfaces/BusStop';
-import { ConnectionPrice } from '../../../shared/Interfaces/ConnectionPrice';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import EditConnectionForm from '../containers/EditConnectionForm/EditConnectionForm';
 import { BusConnection } from 'shared/Interfaces/BusConnection';
 import AddConnectionForm from '../containers/AddConnectionForm/AddConnectionForm';
@@ -16,8 +13,7 @@ const Panel: React.FC = () => {
     const { user } = useUser();
     const [connections, setConnections] = useState([]);
     const [selectedConnection, setSelectedConnection] = useState<any>(null);
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const [newConnection, setNewConnection] = useState({ connection_name: '', owner_id: user?.id, total_travel_time: 0, departure_place: '', destination_place: '' });
+    const {  } = useForm<FormData>();
 
     if (!user) {
         return <Navigate to="/login" replace />;
@@ -105,7 +101,7 @@ const Panel: React.FC = () => {
                     {connections.map((connection: any) => (
                         <div key={connection.id} className={styles.listItem}>
                             <div className={styles['flex']}>
-                                <div onClick={(e) => {handleConnectionClick(connection)}}>
+                                <div onClick={() => {handleConnectionClick(connection)}}>
                                         {connection.connection_name}
                                     {!selectedConnection || selectedConnection.id !== connection.id ? (
                                         <div className={styles.info}>Click to edit</div>

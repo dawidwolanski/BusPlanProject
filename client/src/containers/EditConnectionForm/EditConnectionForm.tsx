@@ -7,8 +7,6 @@ import { ConnectionPrice } from 'shared/Interfaces/ConnectionPrice';
 import { BusConnection } from 'shared/Interfaces/BusConnection';
 import { useForm } from 'react-hook-form';
 import ENDPOINTS from '../../config/endpoints';
-import { useUser } from '../../contexts/UserContext';
-import { register } from 'module';
 
 interface EditConnectionFormProps {
     connection: BusConnection;
@@ -33,7 +31,6 @@ interface PriceFormData {
 }
 
 const BusStopForm: React.FC<{ busStop: BusStop }> = ({ busStop }) => {
-    const [busStops, setBusStops] = useState<BusStop[]>([]);
     const { register: registerBusStop, handleSubmit: handleBusStopSubmit } = useForm<BusStopFormData>();
 
     const updateBusStop = async (data: BusStopFormData) => {
@@ -101,37 +98,12 @@ const EditConnectionForm: React.FC<EditConnectionFormProps> = ({ connection, onC
         onConnectionUpdate(); // Call the callback function
     };
 
-    const updateBusStop = (busStopId: number) => async (data: BusStopFormData) => {
-        const updatedBusStop: BusStop = {
-            ...busStops.find(stop => stop.id === busStopId)!,
-            ...data
-        };
-        await fetch(ENDPOINTS.BUS_STOPS.UPDATE(updatedBusStop.id), {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(updatedBusStop)
-        });
-    };
 
-    const updatePrice = async (price: PriceFormData) => {
+    const updatePrice = async () => {
         if (!connectionPrice) return;
-        const response = await fetch(ENDPOINTS.CONNECTION_PRICES.UPDATE(connectionPrice.connection_id), {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ ...connectionPrice, ...price, id: connectionPrice.connection_id })
-        });
 
     };
 
-    const deleteConnection = async () => {
-        await fetch(ENDPOINTS.CONNECTIONS.DELETE(connection.id), {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-    };
     
     return (
         <>
