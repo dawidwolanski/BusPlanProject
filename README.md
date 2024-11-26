@@ -1,8 +1,3 @@
-# README.md for BusPlanApp
-
-## Overview
-This README provides instructions for setting up and running the BusPlanApp, which consists of a backend server and a client application. The backend utilizes OpenSSL for secure communications, while the client is built with Node.js.
-
 ## Prerequisites
 - **Node.js**: Ensure you have Node.js installed on your machine.
 - **OpenSSL**: Download and install OpenSSL from [Win32OpenSSL](https://slproweb.com/products/Win32OpenSSL.html). Make sure to add OpenSSL to your system's PATH if it is not already included.
