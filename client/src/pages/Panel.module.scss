@@ -79,7 +79,7 @@ h1, h2 {
     border: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
-    margitom: 10px;
+    margin-top: 10px;
 }
 
 .deleteButton {
@@ -88,7 +88,7 @@ h1, h2 {
     margin: 0;
 
 
-    &:hover {
-        background-color: darken($color-error, 10%);
-    }
+//    &:hover {
+    //    background-color: darken($color-error, 10%);
+ //   }
 }
